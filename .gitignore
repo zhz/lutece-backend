@@ -135,3 +135,6 @@ media/
 
 # configure
 Lutece/config.py
+
+# static files
+static

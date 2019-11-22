@@ -135,7 +135,7 @@ SESSION_COOKIE_AGE = 12 * 60 * 60
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [''],
+        'DIRS': ['../lutece-frontend/dist'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

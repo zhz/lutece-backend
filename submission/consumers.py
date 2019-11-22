@@ -83,7 +83,7 @@ class SubmissionDetailConsumer(AsyncWebsocketConsumer):
             self.user = await database_sync_to_async(get_user_by_token)(token=self.scope['query_string'])
         except Exception:
             self.user = AnonymousUser()
-        self.contest_permission = False
+        self.contest_permission = True
         if self.submission.submission_type == 1:
             sub = ContestSubmission.objects.get(pk=self.submission.pk)
             contest = sub.contest

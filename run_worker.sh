@@ -1,1 +1,1 @@
-celery -A Lutece worker -l info -Q result -c 1
+celery -A Lutece worker -l info -Q result -c 1 &
