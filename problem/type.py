@@ -21,7 +21,7 @@ class ProblemSampleListType(graphene.ObjectType):
 class ProblemType(graphene.ObjectType):
     title = graphene.String()
     content = graphene.String()
-    resources = graphene.String()
+    sources = graphene.String()
     note = graphene.String()
     slug = graphene.String()
     constraints = graphene.String()
@@ -41,8 +41,8 @@ class ProblemType(graphene.ObjectType):
     def resolve_content(self, info: ResolveInfo) -> graphene.String():
         return self.content
 
-    def resolve_resources(self, info: ResolveInfo) -> graphene.String():
-        return self.resources
+    def resolve_sources(self, info: ResolveInfo) -> graphene.String():
+        return self.sources
 
     def resolve_note(self, info: ResolveInfo) -> graphene.String():
         return self.note

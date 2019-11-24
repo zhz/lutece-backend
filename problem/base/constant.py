@@ -4,8 +4,8 @@ MAX_TITLE_LENGTH = 256
 # The max length limitation of problem content
 MAX_CONTENT_LENGTH = 32768
 
-# The max length limitation of problem resources
-MAX_RESOURCES_LENGTH = 256
+# The max length limitation of problem sources
+MAX_SOURCES_LENGTH = 256
 
 # Te max length limitation of problem constraints
 MAX_CONSTRAINTS_LENGTH = 16384

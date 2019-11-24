@@ -17,7 +17,7 @@ class UpdateProblem(graphene.Mutation):
         standard_input = graphene.String(required=True)
         standard_output = graphene.String(required=True)
         content = graphene.String(required=True)
-        resources = graphene.String(required=True)
+        sources = graphene.String(required=True)
         constraints = graphene.String(required=True)
         note = graphene.String(required=True)
 
@@ -62,7 +62,7 @@ class CreateProblem(graphene.Mutation):
     class Arguments:
         title = graphene.String(required=True)
         content = graphene.String(required=False)
-        resources = graphene.String(required=False)
+        sources = graphene.String(required=False)
         constraints = graphene.String(required=False)
         note = graphene.String(required=False)
         standard_input = graphene.String(required=False)
