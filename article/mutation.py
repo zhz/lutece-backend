@@ -12,9 +12,9 @@ class UpdateHomeArticle(graphene.Mutation):
     class Arguments:
         title = graphene.String(required=True)
         slug = graphene.String(required=True)
-        preview = graphene.String(required=True)
+        excerpt = graphene.String(required=True)
         content = graphene.String(required=True)
-        disable = graphene.Boolean(required=True)
+        disabled = graphene.Boolean(required=True)
 
     slug = graphene.String()
 
@@ -34,7 +34,7 @@ class UpdateHomeArticle(graphene.Mutation):
 class CreateHomeArticle(graphene.Mutation):
     class Arguments:
         title = graphene.String(required=True)
-        preview = graphene.String(required=True)
+        excerpt = graphene.String(required=True)
         content = graphene.String(required=True)
 
     slug = graphene.String()

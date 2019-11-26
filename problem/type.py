@@ -29,7 +29,8 @@ class ProblemType(graphene.ObjectType):
     standard_output = graphene.String()
     submit = graphene.Int()
     accept = graphene.Int()
-    disable = graphene.Boolean()
+    disabled = graphene.Boolean()
+    private = graphene.Boolean()
     pk = graphene.ID()
     limitation = graphene.Field(AbstractLimiationType)
     samples = graphene.Field(ProblemSampleListType)
@@ -65,8 +66,11 @@ class ProblemType(graphene.ObjectType):
     def resolve_standard_accept(self, info: ResolveInfo) -> graphene.Int():
         return self.accept
 
-    def resolve_disable(self, info: ResolveInfo) -> graphene.Boolean():
-        return self.disable
+    def resolve_disabled(self, info: ResolveInfo) -> graphene.Boolean():
+        return self.disabled
+
+    def resolve_private(self, info: ResolveInfo) -> graphene.Boolean():
+        return self.private
 
     def resolve_pk(self, info: ResolveInfo) -> graphene.ID():
         return self.pk

@@ -83,7 +83,7 @@ class SubmissionDetailConsumer(AsyncWebsocketConsumer):
             self.user = await database_sync_to_async(get_user_by_token)(token=self.scope['query_string'])
         except Exception:
             self.user = AnonymousUser()
-        self.contest_permission = True
+        self.contest_permission = False
         if self.submission.submission_type == 1:
             sub = ContestSubmission.objects.get(pk=self.submission.pk)
             contest = sub.contest
@@ -92,7 +92,7 @@ class SubmissionDetailConsumer(AsyncWebsocketConsumer):
             if usr_team_member and usr_team_member.contest_team == sub_team:
                 self.contest_permission = True
         if not self.user.has_perm('problem.view') and (
-                self.submission.problem.disable or self.submission.user.is_staff) and not self.contest_permission:
+                self.submission.problem.disabled or self.submission.user.is_staff) and not self.contest_permission:
             raise RuntimeError('Permission Denied')
         await self.channel_layer.group_add(
             self.group_name,

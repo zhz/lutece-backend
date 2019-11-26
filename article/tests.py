@@ -13,7 +13,7 @@ class HomeArticleTest(TestCase):
     TEST_MOCK_PASSWORD = "TESTING-PASSWORD"
     TEST_ARTICLE_TITLE = "Romeo and Juliet"
     TEST_ARTICLE_CONTENT = "deerC nissassA"
-    TEST_ARTICLE_PREVIEW = "Odyssey"
+    TEST_ARTICLE_EXCERPT = "Odyssey"
     TEST_EXECUTE_QUERY = '''
         query GetHomeArticle( $slug: ID ){
             homeArticle( slug: $slug ){
@@ -22,7 +22,7 @@ class HomeArticleTest(TestCase):
                 author{
                     username
                 }
-                preview
+                excerpt
             }
         }
     '''
@@ -33,7 +33,7 @@ class HomeArticleTest(TestCase):
             title=self.TEST_ARTICLE_TITLE,
             author=self.mock_usr,
             content=self.TEST_ARTICLE_CONTENT,
-            preview=self.TEST_ARTICLE_PREVIEW
+            excerpt=self.TEST_ARTICLE_EXCERPT
         )
 
     @staticmethod
@@ -54,13 +54,13 @@ class HomeArticleTest(TestCase):
             'author': {
                 'username': self.TEST_MOCK_USERNAME
             },
-            'preview': self.TEST_ARTICLE_PREVIEW
+            'excerpt': self.TEST_ARTICLE_EXCERPT
         }
 
-    def test_query_disable_article(self):
+    def test_query_disabled_article(self):
         context = get_query_context()
         context.user = self.mock_usr
-        self.test_article.disable = True
+        self.test_article.disabled = True
         self.test_article.save()
         client = get_test_graphql_client()
         response = client.execute(
@@ -72,7 +72,7 @@ class HomeArticleTest(TestCase):
         )
         assert HomeArticleTest.get_response_result(response) is None
 
-    def test_query_disable_article_with_permission_allowed(self):
+    def test_query_disabled_article_with_permission_allowed(self):
         perm = Permission.objects.get(content_type=ContentType.objects.get_for_model(HomeArticle),
                                       codename="view_homearticle")
         self.mock_usr.user_permissions.add(perm)
@@ -90,7 +90,7 @@ class HomeArticleTest(TestCase):
             'author': {
                 'username': self.TEST_MOCK_USERNAME
             },
-            'preview': self.TEST_ARTICLE_PREVIEW
+            'excerpt': self.TEST_ARTICLE_EXCERPT
         }
 
 
@@ -100,7 +100,7 @@ class UserArticleTest(TestCase):
     TEST_MOCK_PASSWORD = "TESTING-PASSWORD"
     TEST_ARTICLE_TITLE = "Juliet and Romeo"
     TEST_ARTICLE_CONTENT = "nissassA deerC"
-    TEST_ARTICLE_PREVIEW = "Origin"
+    TEST_ARTICLE_EXCERPT= "Origin"
     TEST_EXECUTE_QUERY = '''
         query GetUserArticle( $pk: ID ){
             userArticle( pk: $pk ){
@@ -141,10 +141,10 @@ class UserArticleTest(TestCase):
             }
         }
 
-    def test_query_disable_article(self):
+    def test_query_disabled_article(self):
         context = get_query_context()
         context.user = self.mock_usr
-        self.test_article.disable = True
+        self.test_article.disabled = True
         self.test_article.save()
         client = get_test_graphql_client()
         response = client.execute(
@@ -156,7 +156,7 @@ class UserArticleTest(TestCase):
         )
         assert UserArticleTest.get_response_result(response) is None
 
-    def test_query_disable_article_with_permission_allowed(self):
+    def test_query_disabled_article_with_permission_allowed(self):
         perm = Permission.objects.get(content_type=ContentType.objects.get_for_model(UserArticle),
                                       codename="view_userarticle")
         self.mock_usr.user_permissions.add(perm)
@@ -182,7 +182,7 @@ class UpdateArticleTest(TestCase):
     TEST_MOCK_PASSWORD = "TESTING-PASSWORD"
     TEST_ARTICLE_TITLE = "Juliet and Romeo"
     TEST_ARTICLE_CONTENT = "nissassA deerC"
-    TEST_ARTICLE_PREVIEW = "Origin"
+    TEST_ARTICLE_EXCERPT = "Origin"
     TEST_CREATE_USER_ARTICLE = '''
         mutation CreateUserArticle( $title: String! , $content: String! ){
             createUserArticle( title: $title, content: $content ){
@@ -209,15 +209,15 @@ class UpdateArticleTest(TestCase):
         }
     '''
     TEST_CREATE_HOME_ARTICLE = '''
-        mutation CreateHomeArticle( $title: String! , $preview: String! ,$content: String! ){
-            createHomeArticle( title: $title, preview: $preview, content: $content ){
+        mutation CreateHomeArticle( $title: String! , $excerpt: String! ,$content: String! ){
+            createHomeArticle( title: $title, excerpt: $excerpt, content: $content ){
                 slug
             }
         }
     '''
     TEST_UPDATE_HOME_ARTICLE = '''
-        mutation UpdateHomeArticle( $slug: String!, $title: String!, $content: String!, $preview: String!, $disable: Boolean!){
-            updateHomeArticle( slug: $slug, title: $title, content: $content, preview: $preview, disable: $disable ){
+        mutation UpdateHomeArticle( $slug: String!, $title: String!, $content: String!, $excerpt String!, $disabled: Boolean!){
+            updateHomeArticle( slug: $slug, title: $title, content: $content, excerpt: $excerpt, disabled: $disabled ){
                 slug
             }
         } 
@@ -227,7 +227,7 @@ class UpdateArticleTest(TestCase):
             homeArticle( slug: $slug ){
                 title
                 content
-                preview
+                excerpt
                 author{
                     username
                 }
@@ -323,7 +323,7 @@ class UpdateArticleTest(TestCase):
             variables={
                 'title': 'Previous',
                 'content': '',
-                'preview': ''
+                'excerpt': ''
             },
             context_value=context,
         )
@@ -339,7 +339,7 @@ class UpdateArticleTest(TestCase):
         assert response.get('data').get('homeArticle') == {
             'title': 'Previous',
             'content': '',
-            'preview': '',
+            'excerpt': '',
             'author': {
                 'username': self.TEST_MOCK_USERNAME
             }
@@ -350,8 +350,8 @@ class UpdateArticleTest(TestCase):
                 'slug': article.slug,
                 'title': self.TEST_ARTICLE_TITLE,
                 'content': self.TEST_ARTICLE_CONTENT,
-                'preview': self.TEST_ARTICLE_PREVIEW,
-                'disable': False,
+                'excerpt': self.TEST_ARTICLE_EXCERPT,
+                'disabled': False,
             },
             context_value=context
         )
@@ -367,7 +367,7 @@ class UpdateArticleTest(TestCase):
         assert response.get('data').get('homeArticle') == {
             'title': self.TEST_ARTICLE_TITLE,
             'content': self.TEST_ARTICLE_CONTENT,
-            'preview': self.TEST_ARTICLE_PREVIEW,
+            'excerpt': self.TEST_ARTICLE_EXCERPT,
             'author': {
                 'username': self.TEST_MOCK_USERNAME
             }
@@ -386,7 +386,7 @@ class UpdateArticleTest(TestCase):
             variables={
                 'title': self.TEST_ARTICLE_TITLE,
                 'content': self.TEST_ARTICLE_CONTENT,
-                'preview': self.TEST_ARTICLE_PREVIEW
+                'excerpt': self.TEST_ARTICLE_EXCERPT
             },
             context_value=context,
         )

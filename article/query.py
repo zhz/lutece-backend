@@ -18,7 +18,7 @@ class Query(object):
         ret = get_object_or_None(UserArticle, pk=pk)
         # if ret is None and been disabled and the request user do not have read permission, ignore
         # this request and return none
-        if ret and ret.disable and not info.context.user.has_perm('article.view_userarticle'):
+        if ret and ret.disabled and not info.context.user.has_perm('article.view_userarticle'):
             return None
         return ret
 
@@ -26,7 +26,7 @@ class Query(object):
         ret = get_object_or_None(HomeArticle, slug=slug)
         # if ret is not None and been disabled and the request user do not have read permission, ignore
         # this request and return none
-        if ret and ret.disable and not info.context.user.has_perm('article.view_homearticle'):
+        if ret and ret.disabled and not info.context.user.has_perm('article.view_homearticle'):
             return None
         return ret
 
@@ -34,7 +34,7 @@ class Query(object):
         home_article_list = HomeArticle.objects.all()
         privilege = info.context.user.has_perm('article.view_homearticle')
         if not privilege:
-            home_article_list = home_article_list.filter(disable=False)
+            home_article_list = home_article_list.filter(disabled=False)
         if filter:
             home_article_list = home_article_list.filter(title__icontains=filter)
         home_article_list = home_article_list.order_by('-create_time')
@@ -48,7 +48,7 @@ class Query(object):
         article_comment_list = ArticleComment.objects.filter(article=article)
         privilege = info.context.user.has_perm('article.view_articlecomment')
         if not privilege:
-            article_comment_list = article_comment_list.filter(disable=False)
+            article_comment_list = article_comment_list.filter(disabled=False)
         article_comment_list = article_comment_list.order_by('-vote')
         paginator = Paginator(article_comment_list, COMMENT_PER_PAGE_COUNT)
         return ArticleCommentListType(max_page=paginator.num_pages, article_comment_list=paginator.get_page(page))

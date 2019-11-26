@@ -2,13 +2,13 @@ from annoying.functions import get_object_or_None
 from django import forms
 
 from article.base.form import AbstractArticleForm
-from article.constant import MAX_PREVIEW_LENGTH
+from article.constant import MAX_EXCERPT_LENGTH
 from article.models import HomeArticle, UserArticle, Article, ArticleComment
 from reply.constant import MAX_CONTENT_LENGTH
 
 
 class UpdateHomeArticleForm(AbstractArticleForm):
-    preview = forms.CharField(required=False, max_length=MAX_PREVIEW_LENGTH)
+    excerpt = forms.CharField(required=False, max_length=MAX_EXCERPT_LENGTH)
     slug = forms.CharField(required=True)
 
     def clean(self) -> dict:
@@ -20,7 +20,7 @@ class UpdateHomeArticleForm(AbstractArticleForm):
 
 
 class CreateHomeArticleForm(AbstractArticleForm):
-    preview = forms.CharField(required=False, max_length=MAX_PREVIEW_LENGTH)
+    excerpt = forms.CharField(required=False, max_length=MAX_EXCERPT_LENGTH)
 
 
 class CreateUserArticleForm(AbstractArticleForm):

@@ -12,5 +12,5 @@ class Query(object):
 
     def resolve_comment_reply_list(self: None, info: ResolveInfo, pk: int, page: int):
         return Paginator(
-            BaseReply.objects.filter(ancestor=BaseReply.objects.get(pk=pk), disable=False).order_by('-vote'),
+            BaseReply.objects.filter(ancestor=BaseReply.objects.get(pk=pk), disabled=False).order_by('-vote'),
             REPLY_COMMENT_PER_PAGE_COUNT).get_page(page)

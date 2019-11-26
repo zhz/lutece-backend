@@ -13,7 +13,7 @@ class AbstractArticle(models.Model):
     author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     create_time = models.DateTimeField(default=timezone.now)
     last_update_time = models.DateTimeField(default=timezone.now)
-    disable = models.BooleanField(default=False)
+    disabled = models.BooleanField(default=False)
     content = models.TextField(blank=True)
 
     def __str__(self):

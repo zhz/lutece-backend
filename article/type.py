@@ -25,7 +25,7 @@ class ArticleType(graphene.ObjectType):
     record = graphene.Field(ArticleRecordType)
     vote = graphene.Int()
     self_attitude = graphene.Boolean()
-    disable = graphene.Boolean()
+    disabled = graphene.Boolean()
 
     def resolve_pk(self, info: ResolveInfo) -> graphene.ID():
         return self.pk
@@ -58,20 +58,20 @@ class ArticleType(graphene.ObjectType):
         vote = get_object_or_None(ArticleVote, article=self, record_user=usr)
         return vote.attitude if vote else False
 
-    def resolve_disable(self, info: ResolveInfo) -> graphene.Boolean():
-        return self.disable
+    def resolve_disabled(self, info: ResolveInfo) -> graphene.Boolean():
+        return self.disabled
 
 
 class HomeArticleType(ArticleType):
     slug = graphene.String()
-    preview = graphene.String()
+    excerpt = graphene.String()
     rank = graphene.Int()
 
     def resolve_slug(self, info: ResolveInfo) -> graphene.String():
         return self.slug
 
-    def resolve_preview(self, info: ResolveInfo) -> graphene.String():
-        return self.preview
+    def resolve_excerpt(self, info: ResolveInfo) -> graphene.String():
+        return self.excerpt
 
     def resolve_rank(self, info: ResolveInfo) -> graphene.Int():
         return self.rank

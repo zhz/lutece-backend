@@ -28,7 +28,9 @@ class UpdateProblem(graphene.Mutation):
 
         samples = graphene.String(required=True)
 
-        disable = graphene.Boolean(required=True)
+        disabled = graphene.Boolean(required=True)
+
+        private = graphene.Boolean(required=True)
 
         slug = graphene.String(required=True)
 
@@ -73,7 +75,9 @@ class CreateProblem(graphene.Mutation):
         output_limit = graphene.Int(required=True)
         cpu_limit = graphene.Int(required=True)
 
-        disable = graphene.Boolean(required=True)
+        disabled = graphene.Boolean(required=True)
+
+        private = graphene.Boolean(required=True)
 
         samples = graphene.String(required=True)
 

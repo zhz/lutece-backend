@@ -12,4 +12,5 @@ class AbstractProblemForm(forms.Form):
     note = forms.CharField(required=False, max_length=MAX_NOTE_LENGTH)
     standard_input = forms.CharField(required=False, max_length=MAX_STANDARD_INPUT_LENGTH)
     standard_output = forms.CharField(required=False, max_length=MAX_STANDARD_OUTPUT_LENGTH)
-    disable = forms.BooleanField(required=False)
+    disabled = forms.BooleanField(required=False)
+    private = forms.BooleanField(required=False)

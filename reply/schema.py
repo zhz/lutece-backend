@@ -14,14 +14,14 @@ class AbstractReplyType(DjangoObjectType):
     vote = graphene.Int()
     self_attitude = graphene.String()
     discussion = graphene.List(AbstractReplyType)
-    disable = graphene.Boolean()
+    disabled = graphene.Boolean()
 
     def resolve_pk(self, info, *args, **kwargs):
         return self.pk
 
     def resolve_content(self, info, *args, **kwargs):
         privilege = info.context.user.has_perm('AbstractReply.view')
-        if self.disable and not privilege:
+        if self.disabled and not privilege:
             return ''
         return self.content
 
@@ -45,8 +45,8 @@ class AbstractReplyType(DjangoObjectType):
     def resolve_discussion(self, info, *args, **kwargs):
         return list(AbstractReply.objects.filter(ancestor=self.pk))
 
-    def resolve_disable(self, info, *args, **kwargs):
-        return self.disable
+    def resolve_disabled(self, info, *args, **kwargs):
+        return self.disabled
 
 
 class UpdateAbstractReplyVote(graphene.Mutation):

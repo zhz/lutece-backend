@@ -27,7 +27,7 @@ class ArticleVote(DetailedRecord):
 # The home page article model
 class HomeArticle(Article):
     slug = models.CharField(max_length=MAX_SLUG_LENGTH)
-    preview = models.TextField(blank=True)
+    excerpt = models.TextField(blank=True)
     rank = models.IntegerField(default=0)
 
     def save(self, *args, **kwargs):

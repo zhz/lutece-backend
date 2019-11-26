@@ -30,14 +30,14 @@ class Query(object):
         contest_list = Contest.objects.all()
         privilege = info.context.user.has_perm('contest.view_contest')
         if not privilege:
-            contest_list = contest_list.filter(settings__disable=False)
+            contest_list = contest_list.filter(settings__disabled=False)
         return contest_list.get(pk=pk)
 
     def resolve_contest_list(self: None, info: ResolveInfo, page: int, filter: str):
         contest_list = Contest.objects.all()
         privilege = info.context.user.has_perm('contest.view_contest')
         if not privilege:
-            contest_list = contest_list.filter(settings__disable=False)
+            contest_list = contest_list.filter(settings__disabled=False)
         if filter:
             contest_list = contest_list.filter(Q(pk__contains=filter) | Q(title__icontains=filter))
         contest_list = contest_list.order_by('-pk')
@@ -116,7 +116,7 @@ class Query(object):
         clarification_list = ContestClarification.objects.filter(contest=contest)
         privilege = info.context.user.has_perm('contest.view_contestclarification')
         if not privilege:
-            clarification_list = clarification_list.filter(disable=False)
+            clarification_list = clarification_list.filter(disabled=False)
         clarification_list = clarification_list.order_by('-vote')
         paginator = Paginator(clarification_list, CLARIFICATION_PER_PAGE_COUNT)
         return ContestClarificationListType(max_page=paginator.num_pages,

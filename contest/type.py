@@ -49,7 +49,7 @@ class ContestProblemType(ProblemType):
 
 class ContestSettingsType(graphene.ObjectType):
     note = graphene.String()
-    disable = graphene.Boolean()
+    disabled = graphene.Boolean()
     start_time = graphene.DateTime()
     end_time = graphene.DateTime()
     max_team_member_number = graphene.Int()
@@ -58,8 +58,8 @@ class ContestSettingsType(graphene.ObjectType):
     def resolve_note(self, info: ResolveInfo) -> graphene.String():
         return self.note
 
-    def resolve_disable(self, info: ResolveInfo) -> graphene.Boolean():
-        return self.disable
+    def resolve_disabled(self, info: ResolveInfo) -> graphene.Boolean():
+        return self.disabled
 
     def resolve_start_time(self, info: ResolveInfo) -> graphene.DateTime():
         return self.start_time

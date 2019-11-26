@@ -13,7 +13,7 @@ class BaseReply(models.Model):
     ancestor = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, db_index=True,
                                  related_name='ancestor_node')
     create_time = models.DateField(default=timezone.now)
-    disable = models.BooleanField(default=False, db_index=True)
+    disabled = models.BooleanField(default=False, db_index=True)
     create_time = models.DateTimeField(default=timezone.now)
     last_update_time = models.DateTimeField(default=timezone.now)
     vote = models.IntegerField(default=0)

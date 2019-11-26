@@ -15,7 +15,7 @@ from user.models import User
 class ContestSettingForm(forms.Form):
     title = forms.CharField(required=True, min_length=1, max_length=MAX_CONTEST_TITLE_LENGTH)
     note = forms.CharField(required=False)
-    disable = forms.BooleanField(required=False)
+    disabled = forms.BooleanField(required=False)
     start_time = forms.DateTimeField(required=False)
     end_time = forms.DateTimeField(required=False)
     max_team_member_number = forms.IntegerField(required=False, min_value=MIN_CONTEST_TEAM_MEMBER,

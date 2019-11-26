@@ -17,7 +17,8 @@ class AbstractProblem(models.Model):
     standard_output = models.TextField(max_length=MAX_STANDARD_OUTPUT_LENGTH, blank=True)
     note = models.TextField(max_length=MAX_NOTE_LENGTH, blank=True)
     slug = models.CharField(max_length=MAX_SLUG_LENGTH)
-    disable = models.BooleanField(default=False)
+    disabled = models.BooleanField(default=False)
+    private = models.BooleanField(default=False)
 
     def __str__(self):
         return f'<Problem:{self.title}>'

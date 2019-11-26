@@ -39,7 +39,7 @@ class CreateCommentReplyForm(forms.Form):
         cleaned_data = super().clean()
         parent = cleaned_data.get('parent')
         reply = get_object_or_None(BaseReply, pk=parent)
-        if parent and (not reply or reply.disable):
+        if parent and (not reply or reply.disabled):
             self.add_error("parent", "No such reply")
         if reply.ancestor:
             self.add_error("parent", "Nested reply is not supported")

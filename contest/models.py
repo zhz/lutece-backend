@@ -11,7 +11,7 @@ from user.models import User
 
 class ContestSettings(models.Model):
     note = models.TextField(blank=True)
-    disable = models.BooleanField(default=False)
+    disabled = models.BooleanField(default=False)
     start_time = models.DateTimeField(null=False, default=timezone.now)
     end_time = models.DateTimeField(null=False, default=timezone.now)
     max_team_member_number = models.IntegerField(default=1)

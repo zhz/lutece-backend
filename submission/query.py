@@ -26,7 +26,7 @@ class Query(object):
         # Only consider base class
         status_list = status_list.filter(submission_type=0)
         if not info.context.user.has_perm('problem.view'):
-            status_list = status_list.filter(problem__disable=False)
+            status_list = status_list.filter(problem__disabled=False)
         if not info.context.user.has_perm('user.view') or not info.context.user.has_perm('submission.view'):
             status_list = status_list.filter(user__is_staff=False)
         if pk:
