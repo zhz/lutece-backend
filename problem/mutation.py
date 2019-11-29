@@ -10,6 +10,8 @@ from problem.limitation.models import Limitation
 from problem.models import Problem, ProblemSample
 from utils.function import assign
 
+from django.conf import settings
+from os import path, remove, listdir, mkdir,makedirs
 
 class UpdateProblem(graphene.Mutation):
     class Arguments:
@@ -124,8 +126,37 @@ class UpdateProblemData(graphene.Mutation):
         except Exception as e:
             raise RuntimeError(str(e))
 
+class UpdateProblemMedia(graphene.Mutation):
+    class Arguments:
+        pk = graphene.ID(required=True)
+        file = Upload(required=True)
+
+    state = graphene.Boolean()
+
+    @permission_required('problem.change')
+    def mutate(self, info: ResolveInfo, **kwargs):
+        try:
+            file = kwargs.get('file')
+            pk = kwargs.get('pk')
+
+            dirs = settings.MEDIA_ROOT + '/problem/' + str(pk) 
+            folder = path.exists(dirs)  
+            if not folder:
+                makedirs(dirs)
+
+            with open(dirs + "/" + file.name, 'wb') as file_obj:
+                file_obj.write(file.read())
+                file_obj.close()
+
+            # todo: how to return the attach address ?
+            # mediaurl = '/media/problem/' + str(pk)
+
+        except Exception as e:
+            raise RuntimeError(str(e))
+
 
 class Mutation(graphene.AbstractType):
     update_problem = UpdateProblem.Field()
     create_problem = CreateProblem.Field()
     update_problem_data = UpdateProblemData.Field()
+    update_problem_media= UpdateProblemMedia.Field()    
